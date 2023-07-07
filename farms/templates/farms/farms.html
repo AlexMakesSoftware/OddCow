@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+        <th>CPH</th>
+        <th>Farm name</th>
+        <th>Address1</th>
+        <!-- Add more columns as needed -->
+        </tr>
+    </thead>
+    <tbody>        
+        {% for farm in farms %}        
+        <tr>
+            <td>{{ farm.county }}/{{ farm.parish }}/{{farm.holding_number}}</td>
+            <td>{{ farm.farm_name }}</td>
+            <td>{{ farm.address_line1 }}</td>            
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">No farms found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+  

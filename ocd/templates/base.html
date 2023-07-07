@@ -1,0 +1,66 @@
+{% load static %}
+{% load django_bootstrap5 %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}{% endblock %}</title>    
+
+    <!-- Additional CSS and JavaScript files -->
+    {% bootstrap_css %}
+
+</head>
+<body class="bg-body-secondary">    
+    <header>
+        <!-- Header content -->
+        {% bootstrap_messages %}
+    </header>
+
+    <nav>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">OCD</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                 
+                  <li class="nav-item">
+                    <a class="nav-link" href="/todo">TODO</a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="/admin">🛠️</a>
+                  </li>
+                </ul>                
+              </div>
+            </div>
+          </nav>
+    </nav>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="container">
+        <hr/>
+        <div class="row">
+            <div class="col">
+                <p><small>Terms and conditions that nobody ever reads go right here.</small></p>
+            </div>
+            <div class="col-md-2">
+                <p class="small">Biscuits and privacy policy.</p>                                  
+            </div>
+        </div>
+        <div class="text-center"><p class="small">Website &copy; 2023 etc. 🐄</p></div>
+        
+    </footer>
+    {% bootstrap_javascript %}
+</body>
+</html>
+
+

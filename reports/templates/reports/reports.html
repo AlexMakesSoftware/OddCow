@@ -1,0 +1,14 @@
+<div class="reports-section">    
+    <ul>
+        {% for report in reports %}
+          <li>Incident:{{ report.incident_number }}</li>
+          <li>Start:{{ report.start_date }}</li>
+          <li>End:{{ report.end_date }}</li>
+          <li>Status:{{ report.status }}</li>
+          <!-- Add more properties you want to display -->
+        {% empty %}
+          <li>No reports found. That's odd.</li>
+        {% endfor %}
+      </ul>
+</div>
+  
