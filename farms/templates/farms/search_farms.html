@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load copy_params %}
+
+{% block title %}Locate Farm{% endblock %}
+
+{% block content %}
+    <!-- search.html -->
+    <form method="GET">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+    </form>
+    <hr/>
+    {% if farm_records %}
+        <h3>Matches:</h3>
+        <ul>
+            {% for record in farm_records %}
+                <li>{{ record.county }}/{{ record.parish }}/{{ record.holding_number }} - {{ record.farm_name }} </li>
+                <!-- Display other fields as needed -->
+            {% endfor %}
+
+        </ul>
+        <hr/>
+        {% if farm_records.has_previous %}
+            <a href="?page=1">&larrb First</a>    
+            <a href="?page={{farm_records.previous_page_number}}">&laquo Previous</a>
+        {% endif %}
+        {{ farm_records }}
+        {% if farm_records.has_next %}            
+            <a href="?{% param_replace page=farm_records.next_page_number %}">&raquo Next</a>
+
+            <a href="?page={{farm_records.paginator.num_pages}}">&rarrb Last</a>
+            
+        {% endif %}
+    {% else %}
+        <p>No matching records found.</p>
+    {% endif %}
+
+{% endblock %}
