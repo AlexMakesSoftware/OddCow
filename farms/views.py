@@ -9,7 +9,8 @@ def farms_index(request):
     return render(request, "farms/farms.html", {'farms': data})
 
 
-def farms_search(request):        
+def farms_search(request):
+    pagination_size = 20  # Default value
     farm_records = Farm.objects.using('legacy').all()
 
     if request.method == "GET":
@@ -41,7 +42,7 @@ def farms_search(request):
         form = FarmSearchForm()
 
      # Pagination
-    p = Paginator(farm_records, 20)  # Display 20 records per page
+    p = Paginator(farm_records, pagination_size)  # Display 20 records per page
     page_number = request.GET.get('page')  # Get the current page number from the request's GET parameters    
     
     page_obj = p.get_page(page_number)  # Get the Page object for the current page number    

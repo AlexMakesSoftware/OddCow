@@ -5,6 +5,10 @@
     OCD - RMT (demo)
 {% endblock %}
 
+{% block home_active %}
+    active
+{% endblock %}
+
 {% block content %}
     <div class="container">
         <h1>Odd Cow Disease 🐄 Report Management Tool</h1>        
@@ -17,5 +21,7 @@
         {%include 'reports/reports.html' %}
         <h2>Farm lookup</h2>        
         {%include 'farms/farms.html' %}
+
+        <a href="farms/search">Search for a farm</a>
     </div>
 {% endblock %}
