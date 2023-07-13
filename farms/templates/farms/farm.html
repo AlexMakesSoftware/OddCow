@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load copy_params %}
+
+{% block title %}Locate Farm{% endblock %}
+
+{% block farms_active %}
+    active
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Farm Details</h1>
+        <div class="card">            
+            <div class="card-body">
+                <h5 class="card-title">{{ farm.farm_name }}</h5>
+                <h6 class="card-text .card-subtitle">CPH: {{ farm.cph_to_str }}</h6>
+                <p class="card-text"><strong>Address:</strong></p>
+                <p class="card-text">{{ farm.address_line1 }}</p>
+                {% if farm.address_line2 %}
+                <p class="card-text">{{ farm.address_line2 }}</p>
+                {% endif %}
+                <p class="card-text">{{ farm.city }}, {{ farm.postcode }}</p>
+                
+                <p class="card-text"><strong>Owners:</strong></p>
+                
+                <p><strong>Name:</strong> {{ farm.owner.first_name }} {{ farm.owner.last_name }}</p>
+                <p><strong>Email:</strong> {{ farm.owner.email }}</p>
+                <p><strong>Phone:</strong> {{ farm.owner.phone }}</p>                
+                
+                <p>TODO: show all the corresponding incidents related to this farm here.</p>
+
+                <a href="#" class="btn btn-primary">New incident</a>            
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
