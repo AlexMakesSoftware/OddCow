@@ -1,4 +1,4 @@
 # Please ensure you follow the instructions in the README.md before using this file.
-django==4.2.2
+django==4.2.3
 django-bootstrap5==23.3
 faker==18.11.2
