@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-from .report_view import ReportCreateView
-from .report_view import ReportDetailView
+from .views import ReportCreateView, ReportDetailView
+
 
 urlpatterns = [
     path('', views.reports_index, name='index'),
