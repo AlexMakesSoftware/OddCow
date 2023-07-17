@@ -11,6 +11,21 @@
     <!-- Additional CSS and JavaScript files -->
     {% bootstrap_css %}
 
+  {% comment %} TODO: put this into a seperate... thing. {% endcomment %}
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    footer {
+      margin-top: auto;
+    }
+  </style>
+
 </head>
 <body>
     <header>
@@ -37,9 +52,8 @@
       {% endblock %}
     </main>
 
-    <footer class="footer fixed-bottom">
-      <div class="container">
-        <hr/>
+    <footer class="footer">
+      <div class="container">        
         <div class="row">
             <div class="col">
                 <p><small>Terms and conditions that nobody ever reads go right here.</small></p>
