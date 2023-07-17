@@ -1,0 +1,22 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Incident details{% endblock %}
+
+{% block reports_active %}active{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <p>Incident : {{object.incident_number}}</p>
+        <p>Start : {{object.start_date}}</p>
+        <p>End :
+            {% if object.end_date %}
+                {{object.end_date}}
+            {% else %}
+                n/a.
+            {% endif %}            
+        </p>
+        <p>Status : {{object.status}}</p>
+        <p>Farm : {{object.farm.cph_to_str}}</p>    
+    </div>
+{% endblock %}

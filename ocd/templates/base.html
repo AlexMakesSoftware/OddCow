@@ -12,41 +12,44 @@
     {% bootstrap_css %}
 
 </head>
-<body class="bg-body-secondary">    
+<body>
     <header>
-        <!-- Header content -->
-        {% bootstrap_messages %}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link {% block home_active %}{% endblock %}" aria-current="page" href="/">OCD</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block farms_active %}{% endblock %}" href="/farms/search">Farms</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% block reports_active %}{% endblock %}" href="/reports/search">Reports</a>
+        </li>
+        <li class="nav-item ms-auto">
+          <a class="nav-link" href="/admin">🛠️Admin</a>
+        </li>      
+      </ul>
+        
+      {% bootstrap_messages %}
     </header>
 
-    <ul class="nav nav-tabs">
-      <li class="nav-item">
-        <a class="nav-link {% block home_active %}{% endblock %}" aria-current="page" href="/">OCD</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link {% block farms_active %}{% endblock %}" href="/farms/search">Farms</a>
-      </li>
-      <li class="nav-item ms-auto">
-        <a class="nav-link" href="/admin">🛠️</a>
-      </li>      
-    </ul>
-
-    <main>
+    <main class="mt-3">
       {% block content %}
       {% endblock %}
     </main>
 
-    <footer class="container">
+    <footer class="footer fixed-bottom">
+      <div class="container">
         <hr/>
         <div class="row">
             <div class="col">
                 <p><small>Terms and conditions that nobody ever reads go right here.</small></p>
             </div>
             <div class="col-md-2">
-                <p class="small">Biscuits and privacy policy.</p>                                  
+                <p class="small">🍪 Biscuits and privacy policy.</p>                                  
             </div>
         </div>
         <div class="text-center"><p class="small">Website &copy; 2023 etc. 🐄</p></div>
-        
+      </div>
     </footer>
     {% bootstrap_javascript %}
 </body>

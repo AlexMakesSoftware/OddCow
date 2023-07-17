@@ -1,14 +1,33 @@
-<div class="reports-section">    
-    <ul>
-        {% for report in reports %}
-          <li>Incident:{{ report.incident_number }}</li>
-          <li>Start:{{ report.start_date }}</li>
-          <li>End:{{ report.end_date }}</li>
-          <li>Status:{{ report.status }}</li>
-          <!-- Add more properties you want to display -->
-        {% empty %}
-          <li>No reports found. That's odd.</li>
-        {% endfor %}
-      </ul>
+<div class="reports-section">
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Incident</th>
+        <th scope="col">Start</th>
+        <th scope="col">End</th>
+        <th scope="col">Status</th>
+        <th scope="col">Farm</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for report in reports %}
+        <tr scope="row">
+          <td>{{ report.incident_number }}</td>
+          <td>{{ report.start_date }}</td>
+          <td>
+            {% if object.end_date %}
+              {{object.end_date}}
+            {% else %}
+                n/a.
+            {% endif %}    
+          </td>
+          <td>{{ report.status }}</td>
+          <td>{{ report.farm.cph_to_str }}</td>
+        </tr>
+      {% empty %}
+        <tr colspan="5">No reports found. That's odd.</tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
   

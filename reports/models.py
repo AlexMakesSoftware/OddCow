@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
+from django.db.models import Max
 
 # The 'Copy' classes are our non-legacy copy of the records taken from the legacy databases. This is our copy of the
 # data for which we can guarantee referrential integrity and we are free to update as we see fit. It will not write back
@@ -22,8 +23,12 @@ class FarmCopy(models.Model):
     def __str__(self):
         return f"{self.farm_name} | {self.county}/{self.parish}/{self.holding_number}"
     
-    class Meta:
-        unique_together = ['county', 'parish', 'holding_number']
+    def cph_to_str(self):
+        return f"{self.county}/{self.parish}/{self.holding_number}"
+
+    # honestly not sure if this is useful, or works or does anything...? TODO: test
+    # class Meta:
+    #     unique_together = ['county', 'parish', 'holding_number']
 
 
 class OwnerCopy(models.Model):            
@@ -43,20 +48,25 @@ class IncidentReport(models.Model):
         ('E', 'Ended'),
     )
 
-    incident_number = models.CharField(max_length=8, validators=[MinLengthValidator(8), MaxLengthValidator(8)])
+    incident_number = models.CharField(max_length=8, validators=[MinLengthValidator(8), MaxLengthValidator(8)], unique=True)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
-    
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)    
     farm = models.ForeignKey(FarmCopy, on_delete=models.CASCADE, related_name='incidents')
+
 
     def __str__(self):
         return f"Incident #{self.incident_number} | {self.farm.farm_name}"
-    
-    @staticmethod
-    def generate_unique_incident_number():
-        last_incident = IncidentReport.objects.order_by('-incident_number').first()
-        last_number = int(last_incident.incident_number) if last_incident else 10150102
-        new_number = last_number + 1
-        incident_number = str(new_number).zfill(8)
-        return incident_number
+
+
+    def save(self, *args, **kwargs):        
+        if not self.incident_number:
+            max_incident_number = IncidentReport.objects.aggregate(Max('incident_number'))['incident_number__max']
+            if max_incident_number:
+                next_number = int(max_incident_number) + 1
+            else:
+                next_number = 1
+            self.incident_number = str(next_number).zfill(8)
+        print("I AM BEING CALLED to save")
+        super().save(*args, **kwargs)
+        print("done save.")
