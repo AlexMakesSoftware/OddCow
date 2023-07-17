@@ -16,9 +16,10 @@
             </div>
         </div>
         <br/>
+        
         <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
+            {% csrf_token %}            
+            {{ form.as_p }}            
             <br/>
             <button type="submit" class="btn btn-primary">Create</button>
         </form>

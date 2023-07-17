@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from .forms import IncidentSearchForm
-from .models import IncidentReport
 from django.core.paginator import Paginator
-from .models import IncidentReport
 from django.views.generic.edit import CreateView
 from .models import IncidentReport, FarmCopy, OwnerCopy
 from farms.models import Farm as LegacyFarmData
@@ -12,6 +10,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.generic import DetailView
+from .forms import ReportCreateForm
 
 
 # Create your views here.
@@ -55,8 +54,8 @@ class ReportDetailView(DetailView):
 
 
 class ReportCreateView(CreateView):
-    model = IncidentReport
-    fields = ['start_date','end_date','status']
+    model = IncidentReport    
+    form_class = ReportCreateForm
     template_name = 'reports/report_create.html'
     
     def form_valid(self, form):
