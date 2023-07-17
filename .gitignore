@@ -1,6 +1,9 @@
 #this project's python venv
 django-ocd/
 
+#Not sure what this is but it probably shouldn't be checked in.
+target/
+
 #databases
 *.sqlite3
 
