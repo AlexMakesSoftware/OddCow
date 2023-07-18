@@ -28,6 +28,28 @@ class Farm(models.Model):
     
     def cph_to_str(self):
         return f"{self.county}/{self.parish}/{self.holding_number}"
+    
+    @classmethod
+    def search(cls, holding_number=None, county=None, parish=None):
+        farm_records = cls.objects.using('legacy').all()
+
+        if holding_number:
+            farm_records = farm_records.filter(holding_number__icontains=holding_number)
+
+        if county:
+            try:
+                county_int = int(county)
+                farm_records = farm_records.filter(county=county)
+            except ValueError:
+                print("Ooops!")
+                pass
+                # Ignore it.
+
+        if parish:
+            farm_records = farm_records.filter(parish__icontains=parish)
+
+        return farm_records
+
 
 class Owner(models.Model):
     my_meta_db_using = 'legacy'

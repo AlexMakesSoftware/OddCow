@@ -16,36 +16,26 @@ def farms_search(request):
     if request.method == "GET":
         form = FarmSearchForm(request.GET)
         if form.is_valid():
+            holding_number = form.cleaned_data.get('holding_number')
+            county = form.cleaned_data.get('county')
+            parish = form.cleaned_data.get('parish')
 
-            #Filter by holding.            
-            if form.cleaned_data.get('holding_number') != '':           
-                farm_records = farm_records.filter(
-                    holding_number__icontains=form.cleaned_data['holding_number'])
-            
-            #Filter by county
-            county_val = form.cleaned_data.get('county')
-            if county_val != '':
-                try:
-                    county_int = int(county_val)
-                    farm_records = farm_records.filter(
-                        county=form.cleaned_data['county'])
-                except ValueError:
-                    print("Ooops!")
-                    pass
-                    #ignore it.
-            
-            #Filter by parish
-            if form.cleaned_data.get('parish') != '':
-                farm_records = farm_records.filter(
-                    parish__icontains=form.cleaned_data['parish'])
+            farm_records = Farm.search(
+                holding_number=holding_number,
+                county=county,
+                parish=parish
+            )
+        else:
+            farm_records = Farm.objects.using('legacy').all()
+            form = FarmSearchForm()
     else:
+        farm_records = Farm.objects.using('legacy').all()
         form = FarmSearchForm()
 
-     # Pagination
+    # Pagination
     p = Paginator(farm_records, pagination_size)  # Display 20 records per page
     page_number = request.GET.get('page')  # Get the current page number from the request's GET parameters    
-    
-    page_obj = p.get_page(page_number)  # Get the Page object for the current page number    
+    page_obj = p.get_page(page_number)  # Get the Page object for the current page number
 
     context = {
         'form': form,
