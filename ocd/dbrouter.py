@@ -33,15 +33,15 @@ class DbRouter(object):
         """        
 
         if db == 'legacy' and app_label == 'farms':  
-            print(f"Allowed {model_name} in {db} app:{app_label}")
+            #print(f"Allowed {model_name} in {db} app:{app_label}")
             return True                  
         elif db == 'default' and app_label == 'farms':
-            print(f"Rejected {model_name} in {db} app:{app_label}")
+            #print(f"Rejected {model_name} in {db} app:{app_label}")
             return False
         else:
             if model_name:
-                print(f"Allowed {model_name} in {db} app:{app_label}")
+                #print(f"Allowed {model_name} in {db} app:{app_label}")
                 return True
         
-        print(f"Passed with no opinion on {model_name} in {db} app:{app_label}")
+        #print(f"Passed with no opinion on {model_name} in {db} app:{app_label}")
         return None
