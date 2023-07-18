@@ -1,0 +1,85 @@
+[
+    {
+        "model": "reports.ownercopy",
+        "pk": 16,
+        "fields": {
+            "first_name": "Leonard",
+            "last_name": "Edwards",
+            "email": "skinnerterry@example.org",
+            "phone": "(0808) 157 0776"
+        }
+    },
+    {
+        "model": "reports.farmcopy",
+        "pk": 16,
+        "fields": {
+            "county": 2,
+            "parish": "001",
+            "holding_number": "00042",
+            "address_line1": "9 Lydia motorway",
+            "address_line2": "",
+            "city": "Jeffreymouth",
+            "postcode": "DD2B 0UR",
+            "farm_name": "Birch Group",
+            "owner": 16
+        }
+    },
+    {
+        "model": "reports.ownercopy",
+        "pk": 17,
+        "fields": {
+            "first_name": "Alex",
+            "last_name": "Connell",
+            "email": "nottelling@example.org",
+            "phone": "(0808) 777 7777"
+        }
+    },
+    {
+        "model": "reports.farmcopy",
+        "pk": 17,
+        "fields": {
+            "county": 2,
+            "parish": "001",
+            "holding_number": "00049",
+            "address_line1": "1 someplace",
+            "address_line2": "",
+            "city": "Jeffreymouth",
+            "postcode": "DD2B 7UR",
+            "farm_name": "Connell's Farm",
+            "owner": 17
+        }
+    },
+    {
+        "model": "reports.incidentreport",
+        "pk": 16,
+        "fields": {
+            "incident_number": "00000016",
+            "start_date": "2023-07-08",
+            "end_date": null,
+            "status": "S",
+            "farm": 16
+        }
+    },
+    {
+        "model": "reports.incidentreport",
+        "pk": 17,
+        "fields": {
+            "incident_number": "00000017",
+            "start_date": "2022-07-08",
+            "end_date":  "2022-12-12",
+            "status": "E",
+            "farm": 16
+        }
+    },
+    {
+        "model": "reports.incidentreport",
+        "pk": 18,
+        "fields": {
+            "incident_number": "00000018",
+            "start_date": "2021-07-08",
+            "end_date": "2021-11-11",
+            "status": "E",
+            "farm": 16
+        }
+    }
+]

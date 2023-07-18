@@ -70,3 +70,15 @@ class IncidentReport(models.Model):
         print("I AM BEING CALLED to save")
         super().save(*args, **kwargs)
         print("done save.")
+
+    @classmethod
+    def get_reports_by_cph(cls, county, parish, holding_number):     
+        
+        try:
+            farm = FarmCopy.objects.get(county = county,
+                        parish=parish,
+                        holding_number=holding_number)        
+        except FarmCopy.DoesNotExist: #If this happens it just means we haven't coppied the farm to create a report, that's all.
+            return None
+        
+        return cls.objects.filter(farm=farm)

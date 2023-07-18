@@ -33,6 +33,33 @@
                 <a href="{% url "report-create" farm.id %}" class="btn btn-primary">New incident</a>            
             </div>
         </div>
-
+        <div>
+            <table class="table">
+                {% for report in reports %}                        
+                    <thead>
+                        <th>Incident</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Status</th>                    
+                    </thead>
+                    <tr>
+                        <td>{{report.incident_number}}</td>
+                        <td>{{report.start_date}}</td>
+                        <td>
+                            {% if report.end_date %}
+                                {{report.end_date}}
+                            {% else %}
+                                n/a.
+                            {% endif %}            
+                        </td>
+                        <td>{{report.status}}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">No incidents</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
     </div>
 {% endblock %}
