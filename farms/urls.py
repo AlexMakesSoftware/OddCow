@@ -1,6 +1,7 @@
 from django.urls import path
-from .farm_view import FarmView
 from . import views
+from .views import FarmView
+
 
 
 urlpatterns = [
