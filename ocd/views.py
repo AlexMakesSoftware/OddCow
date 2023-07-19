@@ -4,7 +4,7 @@ from farms.models import Farm
 from reports.models import IncidentReport
 
 
-def dash(request):
+def home(request):
     report_search = request.POST.get('report_search')
 
     if(report_search):

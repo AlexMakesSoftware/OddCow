@@ -12,7 +12,7 @@
 {% block content %}
     <div class="container">
         <h1 class="text-center">Odd Cow Disease ~ Report Management Tool</h1>
-        <p class="text-center">Welcome 'insert name here' -your last login was:blah, today is {% now "SHORT_DATE_FORMAT" %}.</p>                
+        <p class="text-center">Welcome {{user.first_name}}, your last login was {{user.last_login}}, today is {% now "SHORT_DATE_FORMAT" %}.</p>                
 
         <div class="jumbotron">
             <h2>Messages</h1>
