@@ -14,20 +14,14 @@
         <!-- search.html -->
         <form method="GET"> 
             {% comment %} TODO: this is an abuse of tables. Just add an input box and label.     {% endcomment %}
-            <table class="table table-sm">
-                <tbody>
-                    <tr>
-                        <th>Incident</th>
-                        <td>{{form.incident_number}}</td>                        
-                    </tr>
-                </tbody>                
-            </table>
-            <p class="fst-italic">Enter the incident report number in the form above and click search to find a report. Click on the report you require, or move to another page via the buttons at the bottom.</p>
-            <button class="btn btn-primary" type="submit">Search</button>
+            <div class="row">
+                <div class="col-12 col-md-6"><label for="incident_num" class="form-label">Incident</label>{{form.incident_number}}</div>
+                </div>
+            <div>            
+            <button class="btn btn-primary mt-2" type="submit">Search</button>
         </form>
-        <hr/>
         
-        <table class="table table-striped table-sm">
+        <table class="table table-striped table-sm mt-3">
             <thead>
                 <tr>
                     <th>Incident no.</th>

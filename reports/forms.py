@@ -4,7 +4,7 @@ from .models import IncidentReport
 
 class IncidentSearchForm(forms.Form):    
     incident_number = forms.CharField(max_length=8, validators=[MaxLengthValidator(8)],
-                                       required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+                                       required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'id':"incident_num"}))
 
 class ReportCreateForm(forms.ModelForm):
     class Meta:

@@ -7,6 +7,7 @@
         <th scope="col">End</th>
         <th scope="col">Status</th>
         <th scope="col">Farm</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -23,9 +24,10 @@
           </td>
           <td>{{ report.status }}</td>
           <td>{{ report.farm.cph_to_str }}</td>
+          <td><a href="{% url 'report_detail' report.id %}">View</td>
         </tr>
       {% empty %}
-        <tr colspan="5">No reports found. That's odd.</tr>
+        <tr colspan="6">No reports found. That's odd.</tr>
       {% endfor %}
     </tbody>
   </table>

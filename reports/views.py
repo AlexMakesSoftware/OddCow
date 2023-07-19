@@ -67,25 +67,8 @@ class ReportCreateView(CreateView):
             raise ObjectDoesNotExist(f"Legacy farm data with the id {farm_id} cannot be found.")
 
         with transaction.atomic():
-            #duplicate the legacy data.
-            owner_copy = OwnerCopy.objects.create(
-                first_name = farm.owner.first_name,
-                last_name = farm.owner.last_name,
-                email = farm.owner.email,
-                phone = farm.owner.phone
-            )
-            
-            farm_copy = FarmCopy.objects.create(
-                county = farm.county,
-                parish = farm.parish,
-                holding_number = farm.holding_number,
-                address_line1 = farm.address_line1,
-                address_line2 = farm.address_line2,
-                city = farm.city,
-                postcode = farm.postcode,
-                farm_name = farm.farm_name,
-                owner = owner_copy
-            )
+            #TODO: I need a 'find_or_create_from_legacy' method for these that returns the farm.
+            farm_copy = FarmCopy.find_or_copy_from(farm)
             
             # Create an Incident linked to the copied data
             incident = IncidentReport.objects.create(

@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
 from django.db.models import Max
+from django.db import IntegrityError
 
 # The 'Copy' classes are our non-legacy copy of the records taken from the legacy databases. This is our copy of the
 # data for which we can guarantee referrential integrity and we are free to update as we see fit. It will not write back
@@ -27,8 +28,46 @@ class FarmCopy(models.Model):
         return f"{self.county}/{self.parish}/{self.holding_number}"
 
     # honestly not sure if this is useful, or works or does anything...? TODO: test
-    # class Meta:
-    #     unique_together = ['county', 'parish', 'holding_number']
+    class Meta:
+        unique_together = ['county', 'parish', 'holding_number']
+    
+    
+    @classmethod
+    def find_or_copy_from(cls, farm):
+        """
+        If we already have a copy of this farm in the database, then return it,
+        otherwise create a record from the parameters passed in.
+        Make sure you call this from a transaction!
+        """
+        farm_copy = FarmCopy.objects.filter(
+            county = farm.county,
+            parish = farm.parish,
+            holding_number = farm.holding_number
+        )
+        if len(farm_copy) > 1:
+            raise IntegrityError("Integrity constraint violation, more than one copy of the same farm found. "+farm_copy)
+        
+        if not farm_copy.exists():
+            owner_copy = OwnerCopy.objects.create(
+                first_name = farm.owner.first_name,
+                last_name = farm.owner.last_name,
+                email = farm.owner.email,
+                phone = farm.owner.phone
+            )            
+            farm_copy = FarmCopy.objects.create(
+                county = farm.county,
+                parish = farm.parish,
+                holding_number = farm.holding_number,
+                address_line1 = farm.address_line1,
+                address_line2 = farm.address_line2,
+                city = farm.city,
+                postcode = farm.postcode,
+                farm_name = farm.farm_name,
+                owner = owner_copy
+            )
+            return farm_copy
+        else:
+            return farm_copy.first()
 
 
 class OwnerCopy(models.Model):            
@@ -67,9 +106,8 @@ class IncidentReport(models.Model):
             else:
                 next_number = 1
             self.incident_number = str(next_number).zfill(8)
-        print("I AM BEING CALLED to save")
         super().save(*args, **kwargs)
-        print("done save.")
+
 
     @classmethod
     def get_reports_by_cph(cls, county, parish, holding_number):     
@@ -78,7 +116,8 @@ class IncidentReport(models.Model):
             farm = FarmCopy.objects.get(county = county,
                         parish=parish,
                         holding_number=holding_number)        
-        except FarmCopy.DoesNotExist: #If this happens it just means we haven't coppied the farm to create a report, that's all.
+        except FarmCopy.DoesNotExist:
+            #If this happens it just means we haven't coppied the legacy db farm record to create a report, that's fine.
             return None
         
         return cls.objects.filter(farm=farm)

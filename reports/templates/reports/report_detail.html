@@ -7,6 +7,7 @@
 
 {% block content %}
     <div class="container">
+        <h1>Incident details</h1>
         <p>Incident : {{object.incident_number}}</p>
         <p>Start : {{object.start_date}}</p>
         <p>End :
@@ -17,6 +18,8 @@
             {% endif %}            
         </p>
         <p>Status : {{object.status}}</p>
-        <p>Farm : {{object.farm.cph_to_str}}</p>    
+        <p>Farm : {{object.farm.cph_to_str}}</p>
+        <a href="/" class="btn btn-secondary">Home</a>
+        <a href="{% url 'search_farm_records' %}?county={{object.farm.county }}&parish={{object.farm.parish}}&holding_number={{object.farm.holding_number}}" class="btn btn-primary">View farm</a>
     </div>
 {% endblock %}

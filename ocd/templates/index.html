@@ -11,17 +11,16 @@
 
 {% block content %}
     <div class="container">
-        <h1>Odd Cow Disease 🐄 Report Management Tool</h1>        
-        <hr/>
-        <h2>Reports</h2>
-        <p>Show all the reports here, option to filter to just show my own reports, outstanding reports, etc.
-            This is not legacy data - all the corresponding records have been duplicated from the legacy data to our new database.</p>
-        <h2>Current reports</h2>
+        <h1>Odd Cow Disease 🐄 Report Management Tool</h1>
+        <p class="text-center">Welcome 'insert name here' -your last login was:blah, today is {% now "SHORT_DATE_FORMAT" %}.</p>
+        <navigation class="mt-3">
+            <a href="farms/search" class="btn btn-primary">Search for a farm</a>        
+            <a href="reports/search" class="btn btn-secondary">Search for an incident report</a>        
+        </navigation>
+        <h2 class="mt-3">Your reports</h2>
         
-        {%include 'reports/reports.html' %}
-        <h2>Farm lookup</h2>        
-        {%include 'farms/farms.html' %}
-
-        <a href="farms/search">Search for a farm</a>
+        {%include 'reports/reports.html' %}                
+        
+        
     </div>
 {% endblock %}
