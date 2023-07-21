@@ -1,0 +1,29 @@
+from django.db import migrations
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+
+
+def create_custom_permission(apps, schema_editor):
+    # Replace 'Your Group Name' with the desired group name
+    group, _ = Group.objects.get_or_create(name='Approved Users')
+
+    # Replace 'can_access_special_urls' with your custom permission's codename
+    content_type = ContentType.objects.get_for_model(Permission)
+    custom_permission, _ = Permission.objects.get_or_create(
+        codename='approved_user',
+        content_type=content_type,
+        name='Approved User'  # Replace with the desired human-readable name for the permission
+    )
+    group.permissions.add(custom_permission)
+
+    
+class Migration(migrations.Migration):
+
+    dependencies = [
+        ("accounts", "0001_initial"),
+    ]
+
+    operations = [
+        migrations.RunPython(create_custom_permission)
+    ]
+ 

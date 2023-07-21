@@ -4,6 +4,10 @@ from django.contrib import messages
 from .forms import RegisterUserForm
 
 
+def unauthorised_page(request):
+    return render(request, 'authenticate/unauthorised.html')
+
+
 def login_user(request):
     if request.method == "POST":
         username = request.POST["username"]

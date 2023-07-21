@@ -21,8 +21,8 @@ def server_error(request):
 def not_found(request, exception):
     return render(request, 'errors/404.html')
 
-def permission_denied(request, exception):
-    return render(request, 'errors/403.html')
+# def permission_denied(request, exception): #Not sure I want that.
+#     return render(request, 'errors/403.html')
 
 def bad_request(request, exception):
     return render(request, 'errors/400.html')

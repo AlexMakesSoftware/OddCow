@@ -20,11 +20,11 @@ from . import views
 
 handler404 = 'ocd.views.not_found'
 handler500 = 'ocd.views.server_error'
-handler403 = 'ocd.views.permission_denied'
+# handler403 = 'ocd.views.permission_denied'
 handler400 = 'ocd.views.bad_request'
 
 urlpatterns = [
-    path("", views.home, name="home"),
+    path("", views.home, name="home"),    
     path("farms/", include('farms.urls')),
     path("reports/", include('reports.urls')),
     path("admin/", admin.site.urls),
