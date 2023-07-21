@@ -5,12 +5,6 @@ from django.core.paginator import Paginator
 from django.views.generic.base import TemplateView
 from reports.models import IncidentReport
 
-
-def farms_index(request):
-    data = Farm.objects.using('legacy').all()[:20]
-    return render(request, "farms/farms.html", {'farms': data})
-
-
 def farms_search(request):
     pagination_size = 20  # Default value
     farm_records = Farm.objects.using('legacy').all()
@@ -44,6 +38,7 @@ def farms_search(request):
         'farm_records': page_obj
     }
     return render(request, 'farms/search_farms.html', context)
+
 
 
 class FarmView(TemplateView):
