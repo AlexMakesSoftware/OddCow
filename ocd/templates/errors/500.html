@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    OCD - RMT (demo)
+{% endblock %}
+
+{% block home_active %}
+    active
+{% endblock %}
+
+{% block content %}
+    <div class="container">   
+        <div class="card p-5">
+            <h1 class="text-center">🔥 Oh dear...</h2>
+            <p class="text-center">That's not supposed to happen.</p>
+            <p class="small">Error 500, logged in as {{user.first_name}}</p> 
+        </div>
+    </div>
+{% endblock %}
