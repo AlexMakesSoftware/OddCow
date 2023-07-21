@@ -12,7 +12,7 @@
 {% block content %}
     <div class="container">
         <h1 class="text-center">Odd Cow Disease ~ Report Management Tool</h1>
-        <p class="text-center">Welcome {{user.first_name}}, your last login was {{user.last_login}}, today is {% now "SHORT_DATE_FORMAT" %}.</p>                
+        <p class="text-center">Welcome {{user.first_name}}, your last login was {{user.last_login}}</p>
 
         <div class="jumbotron">
             <h2>Messages</h1>
@@ -21,7 +21,7 @@
             <p>Nothing yet.</p>
         </div>
 
-        <div class="mt-5">            
+        <div class="mt-5">
             <navigation class="mt-3">
                 <a href="farms/search" class="btn btn-primary">Search for a farm</a>        
                 <a href="reports/search" class="btn btn-secondary">Search for an incident report</a>        
@@ -29,9 +29,8 @@
         </div>
 
         <div class="card mt-3 p-2">
-            <h2 class="p-2">Your reports</h2>        
+            <h2 class="p-2">Your reports</h2>
             {%include 'reports/reports.html' %}
-        </div>        
-        
+        </div>
     </div>
 {% endblock %}
