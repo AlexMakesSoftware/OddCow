@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator, MaxLengthValidator
 from django.db.models import Max
 from django.db import IntegrityError
+from django.contrib.auth.models import User
 
 # The 'Copy' classes are our non-legacy copy of the records taken from the legacy databases. This is our copy of the
 # data for which we can guarantee referrential integrity and we are free to update as we see fit. It will not write back
@@ -80,6 +81,11 @@ class OwnerCopy(models.Model):
         return f"{self.first_name} {self.last_name} | {self.phone}"
 
 
+
+def get_admin_user_id():
+    return User.objects.get(username='admin').id
+
+
 class IncidentReport(models.Model):
     STATUS_CHOICES = (
         ('S', 'Suspected'),
@@ -93,6 +99,8 @@ class IncidentReport(models.Model):
     status = models.CharField(max_length=1, choices=STATUS_CHOICES)    
     farm = models.ForeignKey(FarmCopy, on_delete=models.CASCADE, related_name='incidents')
 
+    created_by = models.ForeignKey(User, on_delete = models.SET_NULL, null=True, blank=True, related_name='created_reports')
+    assigned_to = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=get_admin_user_id, related_name='assigned_reports')
 
     def __str__(self):
         return f"Incident #{self.incident_number} | {self.farm.farm_name}"

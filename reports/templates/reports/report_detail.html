@@ -19,6 +19,10 @@
         </p>
         <p>Status : {{object.status}}</p>
         <p>Farm : {{object.farm.cph_to_str}}</p>
+
+        <p>Report first created by: {{object.created_by}}</p>
+        <p>Assigned to: {{object.assigned_to}}</p>
+
         <a href="/" class="btn btn-secondary">Home</a>
         <a href="{% url 'search_farm_records' %}?county={{object.farm.county }}&parish={{object.farm.parish}}&holding_number={{object.farm.holding_number}}" class="btn btn-primary">View farm</a>
     </div>

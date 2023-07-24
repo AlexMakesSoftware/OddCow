@@ -75,7 +75,9 @@ class ReportCreateView(CreateView):
                 farm=farm_copy,
                 start_date=form.cleaned_data['start_date'],
                 end_date=form.cleaned_data['end_date'],
-                status=form.cleaned_data['status']
+                status=form.cleaned_data['status'],
+                created_by=self.request.user,
+                assigned_to=self.request.user
             )            
         
         # return super().form_valid(form) we don't want to do this because it will try to save the form for us.
