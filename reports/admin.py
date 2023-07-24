@@ -19,14 +19,7 @@ class OwnerAdmin(ReadOnlyAdminMixin, admin.ModelAdmin):
 class IncidentReportAdmin(admin.ModelAdmin):    
     pass
 
-class CustomAdminSite(admin.AdminSite):
-    def get_logout_url(self):
-        return reverse('logout')
-
 admin.site.register(OwnerCopy, OwnerAdmin)
 admin.site.register(FarmCopy, FarmAdmin)
 admin.site.register(IncidentReport, IncidentReportAdmin)
 
-# Redirects logout for the admin to the login page.
-admin.site = CustomAdminSite()
-admin.sites.site = admin.site
