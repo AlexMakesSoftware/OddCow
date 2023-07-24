@@ -13,12 +13,6 @@ from django.views.generic import DetailView
 from .forms import ReportCreateForm
 
 
-# Create your views here.
-def reports_index(request):
-    reports = IncidentReport.objects.all()
-    return render(request, "reports/reports.html", {'reports':reports})
-
-
 def reports_search(request):
     pagination_size = 20  # Default value
     reports = IncidentReport.objects.all()

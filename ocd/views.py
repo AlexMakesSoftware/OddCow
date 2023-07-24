@@ -5,14 +5,8 @@ from reports.models import IncidentReport
 
 
 def home(request):
-    report_search = request.POST.get('report_search')
-
-    if(report_search):
-        reports_data = IncidentReport.objects.filter(incident_number=report_search)[:20]
-    else:        
-        reports_data = IncidentReport.objects.all()
-
-    return render(request, "index.html", { 'reports':reports_data})
+    reports_data = IncidentReport.objects.all().filter(assigned_to=request.user)
+    return render(request, "index.html", { 'reports':reports_data })
 
 
 def server_error(request):
