@@ -42,7 +42,7 @@ def farms_search(request):
 
 
 class FarmView(TemplateView):
-    template_name = "farms/Farm.html"
+    template_name = "farms/farm.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
