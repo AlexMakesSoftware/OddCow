@@ -1,5 +1,6 @@
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 
 
 class AccessControlMiddleware:
@@ -20,11 +21,11 @@ class AccessControlMiddleware:
         ]
 
         # If the user is not logged in
-        if not request.user.is_authenticated:
-            # print("User not authenticated")
+        if not request.user.is_authenticated:            
             # Check if the requested URL is in the exempt URLs list
             if not any(request.path_info.startswith(url) for url in exempt_urls):
                 # Redirect unauthenticated users to the login page
+                messages.info(request,"You need to login.")
                 return HttpResponseRedirect(reverse('login'))  # Replace 'login' with the actual login URL name
 
         # If the user is authenticated but doesn't have the required permission

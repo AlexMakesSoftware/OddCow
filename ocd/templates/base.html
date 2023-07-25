@@ -48,9 +48,23 @@
           </li>
 
           {% if user.is_authenticated %}
-            <li class="nav-item ms-auto">
+            <li class="nav-item ms-auto dropdown">
+              <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">⚙️Profile</a>              
+
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'update_user' %}">Update profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'change_pass' %}">Change password</a></li>                
+              </ul>
+
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
+            {% if user.is_staff %}
+              <li class="nav-item">
+                <p><a class="nav-link px-2" href="/admin">🛠️Site Admin</a></p>
+              </li>
+            {% endif %}
           {% else %}
             <li class="nav-item ms-auto">
               <a class="nav-link {% block login_active %}{% endblock %}" href="{% url 'login' %}">Login</a>
@@ -78,7 +92,6 @@
             </div>
             <div class="col-md-2">
                 <p class="small">🍪 <a href="#">Biscuits and privacy policy.</a></p>
-                <p><a class="nav-link px-2" href="/admin">🛠️Admin</a></p>
             </div>
         </div>
         <div class="text-center"><p class="small">Website &copy; 2023 🐄</p></div>

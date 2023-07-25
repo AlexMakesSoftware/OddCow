@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, UpdateUserForm, ChangePasswordForm
+from django.contrib.auth.models import User
 
 
 def unauthorised_page(request):
@@ -45,3 +46,42 @@ def register_user(request):
     else:
         form = RegisterUserForm()
     return render(request, 'authenticate/register_user.html',{'form':form})
+
+
+def update_user(request):
+    # N.B. Our middleware already takes care of users who aren't logged in.
+
+    current_user = User.objects.get(id=request.user.id)
+
+    update_form = UpdateUserForm(request.POST or None, instance=current_user)
+   
+    if update_form.is_valid():
+        update_form.save()        
+        messages.success(request, "Your profile has been updated.")
+        return redirect('home')
+    else:        
+        for field_errors in update_form.errors.values():
+            for error in field_errors:
+                messages.error(request, error)
+
+    return render(request, 'authenticate/update_user.html', {
+        'update_form': update_form
+    })
+
+
+def change_pass(request):
+    current_user = User.objects.get(id=request.user.id)
+    password_form = ChangePasswordForm(request.user, request.POST or None)
+
+    if password_form.is_valid():
+        password_form.save()
+        messages.success(request, "Your profile has been updated.")
+        return redirect('home')
+    else:
+        for field_errors in password_form.errors.values():
+            for error in field_errors:
+                messages.error(request, error)    
+
+    return render(request, 'authenticate/change_pass.html', {
+        'password_form': password_form,
+    })

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Register new user
+{% endblock %}
+
+{% block register_active %}
+    active
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1>Change your password</h1>
+            
+            <form method=POST>
+                {% csrf_token %}
+                {{ password_form.as_p }}
+            
+                {% if password_form.errors %}                
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    There was a problem with your form. Please check above.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            
+                <br/>
+                <button type="submit" class="btn btn-primary mt-3">Submit</button>
+            </form>
+
+        </div><!-- row -->
+    </div><!-- container -->     
+{% endblock %}
+
+
+
+
+
+
+
