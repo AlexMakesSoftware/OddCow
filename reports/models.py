@@ -129,3 +129,10 @@ class IncidentReport(models.Model):
             return None
         
         return cls.objects.filter(farm=farm)
+
+
+class Observation(models.Model):
+    incident = models.ForeignKey(IncidentReport, on_delete=models.CASCADE)
+    recorded_on = models.DateField(auto_now_add=True)
+    note = models.TextField()
+    user = models.ForeignKey(User, on_delete = models.SET_NULL, null=True, blank=True)

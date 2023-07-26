@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import reverse
-from .models import FarmCopy, OwnerCopy, IncidentReport
+from .models import FarmCopy, OwnerCopy, IncidentReport, Observation
 
 
 class ReadOnlyAdminMixin:
@@ -16,10 +16,16 @@ class FarmAdmin(ReadOnlyAdminMixin, admin.ModelAdmin):
 class OwnerAdmin(ReadOnlyAdminMixin, admin.ModelAdmin):
     pass
 
+class ObservationsAdmin(admin.TabularInline):
+    model = Observation
+    extra = 1
+
 class IncidentReportAdmin(admin.ModelAdmin):    
-    pass
+    inlines = [ObservationsAdmin]
 
 admin.site.register(OwnerCopy, OwnerAdmin)
 admin.site.register(FarmCopy, FarmAdmin)
 admin.site.register(IncidentReport, IncidentReportAdmin)
+
+
 

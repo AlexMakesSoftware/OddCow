@@ -7,21 +7,49 @@
 
 {% block content %}
     <div class="container">
-        <h1>Incident details</h1>
-        <p>Incident : {{object.incident_number}}</p>
-        <p>Start : {{object.start_date}}</p>
-        <p>End :
-            {% if object.end_date %}
-                {{object.end_date}}
-            {% else %}
-                n/a.
-            {% endif %}            
-        </p>
-        <p>Status : {{object.status}}</p>
-        <p>Farm : {{object.farm.cph_to_str}}</p>
+        <h1>Incident details for CPH {{object.farm.cph_to_str}}</h1>
+        <div class="row">
+            <div class="col-md-2">
+                <p>Incident : {{object.incident_number}}</p>
+            </div>
+            <div class="col-md-2">
+                <p>Started : {{object.start_date}}</p>
+            </div>
+            <div class="col-md-2">
+                <p>Status : {{object.get_status_display}}</p>
+            </div>            
+                <div class="col-md-2">
+                    {% if object.end_date %}
+                        <p>Ended : {{object.end_date}}</p>
+                    {% else %}
+                        <p>Incident still in progress.</p>
+                    {% endif %}
+                </div>            
+            <div class="col-md-2">
+                <p>Report first created by: {{object.created_by}}</p>
+            </div>
+            <div class="col-md-2">
+                <p>Assigned to: {{object.assigned_to}}</p>
+            </div>
+        </div><!-- row -->
+        <ul class="list-group">
+            {% for observation in object.observation_set.all %}        
+                <li class="list-group-item"> <small>{{observation.recorded_on}} <span class="bg-info rounded text-black px-1 mx-1">{{observation.user.first_name}}</span></small>
+                    {{observation.note}}</li>
+            {% empty %}
+                <li>No observations.</li>                
+            {% endfor %}
+        <ul><!-- row -->    
+        
+        <br/>
 
-        <p>Report first created by: {{object.created_by}}</p>
-        <p>Assigned to: {{object.assigned_to}}</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary mt-2" type="submit">Add</button>
+        </form>
+
+        <br/><br/>
 
         <a href="/" class="btn btn-secondary">Home</a>
         <a href="{% url 'search_farm_records' %}?county={{object.farm.county }}&parish={{object.farm.parish}}&holding_number={{object.farm.holding_number}}" class="btn btn-primary">View farm</a>

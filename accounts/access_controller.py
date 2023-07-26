@@ -26,7 +26,7 @@ class AccessControlMiddleware:
             if not any(request.path_info.startswith(url) for url in exempt_urls):
                 # Redirect unauthenticated users to the login page
                 messages.info(request,"You need to login.")
-                return HttpResponseRedirect(reverse('login'))  # Replace 'login' with the actual login URL name
+                return HttpResponseRedirect(reverse('login'))
 
         # If the user is authenticated but doesn't have the required permission
         elif not request.user.has_perm('auth.approved_user'):
@@ -34,7 +34,7 @@ class AccessControlMiddleware:
             # Check if the requested URL is in the exempt URLs list
             if not any(request.path_info.startswith(url) for url in exempt_urls):
                 # Redirect authenticated users without the special permission to a static page
-                return HttpResponseRedirect(reverse('unauthorised_page'))  # Replace with your static page URL
+                return HttpResponseRedirect(reverse('unauthorised_page')) 
         # else:
             # print("Authorised")
         return None

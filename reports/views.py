@@ -1,5 +1,6 @@
+from typing import Any, Dict
 from django.shortcuts import render
-from .forms import IncidentSearchForm
+from .forms import IncidentSearchForm, ObservationCreateForm
 from django.core.paginator import Paginator
 from django.views.generic.edit import CreateView
 from .models import IncidentReport, FarmCopy, OwnerCopy
@@ -11,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.views.generic import DetailView
 from .forms import ReportCreateForm
+from django.urls import reverse
 
 
 def reports_search(request):
@@ -45,6 +47,32 @@ def reports_search(request):
 class ReportDetailView(DetailView):
     model = IncidentReport
     template_name = 'reports/report_detail.html'
+    observation_form_class = ObservationCreateForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.observation_form_class()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        incident_report = self.get_object()
+        print("DEBUG:", incident_report)
+        form = self.observation_form_class(request.POST)
+        if form.is_valid():
+            # Create a new Observation instance but don't save it yet
+            observation = form.save(commit=False)                
+            # Associate the observation with the IncidentReport
+            observation.incident = incident_report
+            observation.user = self.request.user            
+            # Save the observation
+            observation.save()
+            messages.success(self.request, "Observation added successfully.")
+            return redirect('report_detail', pk=incident_report.pk)
+        
+        # If the form is not valid, re-render the template with the form errors
+        context = self.get_context_data(**kwargs)
+        context['form'] = form
+        return self.render_to_response(context)
 
 
 class ReportCreateView(CreateView):
