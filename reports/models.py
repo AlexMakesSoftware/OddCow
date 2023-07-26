@@ -105,7 +105,6 @@ class IncidentReport(models.Model):
     def __str__(self):
         return f"Incident #{self.incident_number} | {self.farm.farm_name}"
 
-
     def save(self, *args, **kwargs):        
         if not self.incident_number:
             max_incident_number = IncidentReport.objects.aggregate(Max('incident_number'))['incident_number__max']
@@ -116,18 +115,15 @@ class IncidentReport(models.Model):
             self.incident_number = str(next_number).zfill(8)
         super().save(*args, **kwargs)
 
-
     @classmethod
-    def get_reports_by_cph(cls, county, parish, holding_number):     
-        
+    def get_reports_by_cph(cls, county, parish, holding_number):        
         try:
             farm = FarmCopy.objects.get(county = county,
                         parish=parish,
                         holding_number=holding_number)        
         except FarmCopy.DoesNotExist:
             #If this happens it just means we haven't coppied the legacy db farm record to create a report, that's fine.
-            return None
-        
+            return None        
         return cls.objects.filter(farm=farm)
 
 
