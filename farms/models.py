@@ -41,7 +41,6 @@ class Farm(models.Model):
                 county_int = int(county)
                 farm_records = farm_records.filter(county=county)
             except ValueError:
-                print("Ooops!")
                 pass
                 # Ignore it.
 

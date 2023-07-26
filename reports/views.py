@@ -55,8 +55,7 @@ class ReportDetailView(DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        incident_report = self.get_object()
-        print("DEBUG:", incident_report)
+        incident_report = self.get_object()        
         form = self.observation_form_class(request.POST)
         if form.is_valid():
             # Create a new Observation instance but don't save it yet

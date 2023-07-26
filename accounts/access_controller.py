@@ -29,12 +29,9 @@ class AccessControlMiddleware:
                 return HttpResponseRedirect(reverse('login'))
 
         # If the user is authenticated but doesn't have the required permission
-        elif not request.user.has_perm('auth.approved_user'):
-            # print("User authenticated but doesn't have approval.")            
+        elif not request.user.has_perm('auth.approved_user'):          
             # Check if the requested URL is in the exempt URLs list
             if not any(request.path_info.startswith(url) for url in exempt_urls):
                 # Redirect authenticated users without the special permission to a static page
-                return HttpResponseRedirect(reverse('unauthorised_page')) 
-        # else:
-            # print("Authorised")
+                return HttpResponseRedirect(reverse('unauthorised_page'))
         return None

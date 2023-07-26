@@ -39,18 +39,13 @@ class DbRouter(object):
         Return True if the operation should run, False if it shouldnt run, or None if the router has no opinion.
         """        
 
-        if db == 'legacy' and app_label == 'farms':  
-            #print(f"Allowed {model_name} in {db} app:{app_label}")
+        if db == 'legacy' and app_label == 'farms':              
             return True                  
-        elif db == 'default' and app_label == 'farms':
-            #print(f"Rejected {model_name} in {db} app:{app_label}")
+        elif db == 'default' and app_label == 'farms':            
             return False
         else:
-            if model_name:
-                #print(f"Allowed {model_name} in {db} app:{app_label}")
+            if model_name:                
                 return True
         
-        # TODO: make sure that the admin stuff and the default tables don't ever go into the legacy db.
-
-        #print(f"Passed with no opinion on {model_name} in {db} app:{app_label}")
+        # TODO: make sure that the admin stuff and the default tables don't ever go into the legacy db.        
         return None
