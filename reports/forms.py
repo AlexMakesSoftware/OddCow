@@ -21,5 +21,5 @@ class ObservationCreateForm(forms.ModelForm):
         model = Observation
         fields = ['note']
         widgets = {
-            'note': forms.widgets.Textarea(attrs={'class': 'form-control'})            
+            'note': forms.widgets.Textarea(attrs={'class': 'form-control', 'rows': 2})            
         }

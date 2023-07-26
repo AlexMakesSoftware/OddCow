@@ -39,18 +39,20 @@
             {% empty %}
                 <li>No observations.</li>                
             {% endfor %}
-        <ul><!-- row -->    
-        
-        <br/>
+        <ul><!-- row -->
 
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-primary mt-2" type="submit">Add</button>
+        <form method="POST" class="my-4">
+            <div class="form-group row">
+                {% csrf_token %}
+                <div class="col-md-10">
+                    {{ form.as_p }}
+                </div>        
+                <div class="col d-flex flex-column"> <!-- BEHOLD! this is something I've tried to do in CSS for donkeys. Align a button to the vertical bottom, properly. -->
+                    <button class="btn btn-primary mb-3 mt-auto" type="submit">Add</button>
+                </div>
+            </div>            
         </form>
-
-        <br/><br/>
-
+        
         <a href="/" class="btn btn-secondary">Home</a>
         <a href="{% url 'search_farm_records' %}?county={{object.farm.county }}&parish={{object.farm.parish}}&holding_number={{object.farm.holding_number}}" class="btn btn-primary">View farm</a>
     </div>
